@@ -376,3 +376,4 @@ docker ps
 ```
 
 
+Congratz. Worker is working safely but currently I am not sure that I have done it completely correct as the point system seems to be buggy. I'll update here and on my twitter [0xMoei](https://twitter.com/0xMoei)
