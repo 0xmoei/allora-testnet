@@ -128,7 +128,7 @@ sudo docker run -it --entrypoint=bash -v ./worker-data:/data alloranetwork/allor
 # Copy the head-id
 cat head-data/keys/identity
 ```
-> this your head-id , you need it in the next step
+> This is your head-id , you need it in the next step
 
 ![Screenshot_78](https://github.com/0xmoei/allora-testnet/assets/90371338/5c8e4f77-6214-4f65-83e2-359a39aee966)
 
