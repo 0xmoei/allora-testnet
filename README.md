@@ -351,3 +351,13 @@ Response:
 ```
 {"value":"2564.021586281073"}
 ```
+
+### Check Docker containers
+```console
+docker ps
+```
+
+You can replace `id` with the id of your docker containers
+```console
+docker logs -f id
+```
