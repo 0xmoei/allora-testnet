@@ -20,7 +20,7 @@
 
 #
 
-> Make sure to join off-chain community tasks on [Zealy](https://zealy.io/cw/alloranetwork/invite/IU2cqqMstYG1pEtHTenpn) & [Galxe](https://app.galxe.com/quest/AlloraNetwork) as they are as important as onchain tasks
+> Make sure to join off-chain community tasks on [Zealy](https://zealy.io/cw/alloranetwork/invite/IU2cqqMstYG1pEtHTenpn) & [Galxe](https://app.galxe.com/quest/AlloraNetwork) since they are as important as onchain tasks
 >
 > Team will add new tasks in it this week
 
