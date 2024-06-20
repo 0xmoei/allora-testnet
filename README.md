@@ -1,4 +1,8 @@
-# Allora Network
+<h1 align="center">Allora Network Point Program</h1>
+
+![666b297b8d80555ff9a25256_allora-points-phase-2](https://github.com/0xmoei/allora-testnet/assets/90371338/6298f73a-3c58-40a6-9d92-725f36456901)
+
+
 
 > - Create a new wallet in Keplr
 >
@@ -18,13 +22,13 @@
 
 #
 
-> Make sure to join [off-chain community tasks](https://zealy.io/cw/alloranetwork/invite/IU2cqqMstYG1pEtHTenpn) as they are as important as onchain tasks
+> Make sure to join off-chain community tasks on [Zealy](https://zealy.io/cw/alloranetwork/invite/IU2cqqMstYG1pEtHTenpn) & [Galxe](https://app.galxe.com/quest/AlloraNetwork) as they are as important as onchain tasks
 >
 > Team will add new tasks in it this week
 
 #
 
-# Price Prediction Worker Node
+<h1 align="center">Price Prediction Worker Node</h1>
 
 ## System Requirements
 ![image](https://github.com/0xmoei/allora-testnet/assets/90371338/56f1e0d2-4d59-436c-a0e0-183f9a082de4)
