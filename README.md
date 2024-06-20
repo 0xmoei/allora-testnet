@@ -34,8 +34,17 @@
 # Install Packages
 sudo apt update & sudo apt upgrade -y
 
-sudo apt install ca-certificates curl git wget make jq build-essential pkg-config lsb-release libssl-dev gcc screen unzip lz4 -y
+sudo apt install ca-certificates zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev curl git wget make jq build-essential pkg-config lsb-release libssl-dev libreadline-dev libffi-dev gcc screen unzip lz4 -y
+```
+```console
+# Install Python3
+sudo apt install python3
+python3 --version
 
+sudo apt install python3-pip
+pip3 --version
+```
+```console
 # Install Docker
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
@@ -57,9 +66,8 @@ docker-compose --version
 sudo groupadd docker
 sudo usermod -aG docker $USER
 ```
-
-## Install Go
 ```console
+# Install Go
 cd $HOME && \
 ver="1.21.3" && \
 wget "https://golang.org/dl/go$ver.linux-amd64.tar.gz" && \
