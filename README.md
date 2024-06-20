@@ -14,7 +14,7 @@
 >
 > The points are 0 for everyone right now and we are not sure that we are 100% fine
 >
-> I will update everything here, so we make sure that we will gain points
+> I will update reguarly here, so we make sure that we will gain points when it is fixed
 
 ## Install dependecies
 ```console
