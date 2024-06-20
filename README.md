@@ -16,6 +16,16 @@
 >
 > - I will update reguarly here, so we make sure that we will gain points when it is fixed
 
+#
+
+> Make sure to join [off-chain community tasks](https://zealy.io/cw/alloranetwork/invite/IU2cqqMstYG1pEtHTenpn) as they are as important as onchain tasks
+>
+> Team will add new tasks in it this week
+
+#
+
+# Price Prediction Worker Node
+
 ## Install dependecies
 ```console
 sudo apt update & sudo apt upgrade -y
@@ -95,4 +105,75 @@ nano docker-compose.yml
 # Run worker
 docker compose build
 docker compose up -d
+```
+
+
+## Check your node status
+* Worker node
+```console
+curl --location 'http://localhost:6000/api/v1/functions/execute' \
+--header 'Content-Type: application/json' \
+--data '{
+    "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
+    "method": "allora-inference-function.wasm",
+    "parameters": null,
+    "topic": "1",
+    "config": {
+        "env_vars": [
+            {
+                "name": "BLS_REQUEST_PATH",
+                "value": "/api"
+            },
+            {
+                "name": "ALLORA_ARG_PARAMS",
+                "value": "ETH"
+            }
+        ],
+        "number_of_nodes": -1,
+        "timeout": 2
+    }
+}
+```
+Response:
+```
+{
+  "code": "200",
+  "request_id": "03001a39-4387-467c-aba1-c0e1d0d44f59",
+  "results": [
+    {
+      "result": {
+        "stdout": "{\"value\":\"2564.021586281073\"}",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWG8dHctRt6ctakJfG5masTnLaKM6xkudoR5BxLDRSrgVt"
+      ],
+      "frequency": 100
+    }
+  ],
+  "cluster": {
+    "peers": [
+      "12D3KooWG8dHctRt6ctakJfG5masTnLaKM6xkudoR5BxLDRSrgVt"
+    ]
+  }
+}
+```
+
+* Updater node
+```console
+curl http://localhost:8000/update
+```
+Response:
+```
+0
+```
+
+Inference node
+```console
+curl http://localhost:8000/inference/ETH
+```
+Response:
+```
+{"value":"2564.021586281073"}
 ```
