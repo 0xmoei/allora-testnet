@@ -283,6 +283,21 @@ docker compose up -d
 ```
 
 ## Check your node status
+### Check running docker containers
+```console
+docker ps
+```
+![Screenshot_81](https://github.com/0xmoei/allora-testnet/assets/90371338/9565560a-6884-42f6-899b-7920eca43ef0)
+
+Replace `CONTAINER_ID` with the id of your docker containers
+```console
+docker logs -f CONTAINER_ID
+```
+> Success: register node Tx Hash:=82BF67E2E1247B226B8C5CFCF3E4F41076909ADABF3852C468D087D94BD9FC3B
+
+![Screenshot_80](https://github.com/0xmoei/allora-testnet/assets/90371338/cefe126e-4ecb-4af3-9444-4e5e014fed52)
+
+
 ### Check Worker node:
 ```console
 curl --location 'http://localhost:6000/api/v1/functions/execute' \
@@ -306,7 +321,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' \
         "number_of_nodes": -1,
         "timeout": 2
     }
-}
+}'
 ```
 Response:
 ```
@@ -357,7 +372,4 @@ Response:
 docker ps
 ```
 
-You can replace `id` with the id of your docker containers
-```console
-docker logs -f id
-```
+
