@@ -26,6 +26,9 @@
 
 # Price Prediction Worker Node
 
+## System Requirements
+![image](https://github.com/0xmoei/allora-testnet/assets/90371338/56f1e0d2-4d59-436c-a0e0-183f9a082de4)
+
 ## Install dependecies
 ```console
 # Install Packages
