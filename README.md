@@ -135,7 +135,7 @@ cat head-data/keys/identity
 ## Connect to Allora Chain
 * Delete and create new `docker-compose.yml` file
 ```console
-rm -rf docker-compose.yml $$ nano docker-compose.yml
+rm -rf docker-compose.yml && nano docker-compose.yml
 ```
 
 * Copy & Paste the following code in it
