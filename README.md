@@ -1,10 +1,25 @@
+# Allora Network
+
+> Create a new wallet in Keplr
+>
+> Connect to the on-chain Point Program [Dashboard](https://app.allora.network?ref=eyJyZWZlcnJlcl9pZCI6IjVlNmEwMjc5LTcxNjEtNDhmYS04NGM3LWEzYzM0MGM4MGIzNyJ9)
+>
+> In Campaigns tab you see 2 tasks, Check them
+> 
+> In the tutorial we run a `Price Prediction Worker` with `topic 1` (Predicting `ETH` price every 24h)
+>
+> Check the campaigns tasks steps to see what `topic` means
+>
+> We get points by running a worker
+>
+> The points are 0 for everyone right now and we are not sure that we are 100% fine
+
 ## Install dependecies
 ```console
 sudo apt update & sudo apt upgrade -y
 
 sudo apt install curl git wget make jq build-essential pkg-config libssl-dev gcc screen unzip lz4 -y
 ```
-
 
 ## Install Go
 ```console
@@ -37,6 +52,18 @@ allorad keys add testkey --recover
 # Create a new wallet
 allorad keys add testkey
 ```
+
+## Get Faucet
+> Connect to Allora [dashboard](https://app.allora.network?ref=eyJyZWZlcnJlcl9pZCI6IjVlNmEwMjc5LTcxNjEtNDhmYS04NGM3LWEzYzM0MGM4MGIzNyJ9) to find your Allora address
+>
+> You can add Allora network to Keplr [here](https://explorer.edgenet.allora.network/wallet/suggest)
+> 
+> Get uAllo faucet [here](https://faucet.edgenet.allora.network/)
+
+![Screenshot_77](https://github.com/0xmoei/allora-testnet/assets/90371338/9e1d6236-ff51-48a1-a9f6-1149c842a4d0)
+
+![Screenshot_76](https://github.com/0xmoei/allora-testnet/assets/90371338/ff27b97d-d04f-42c4-aa1b-3fb666874098)
+
 
 ## Install Worker
 ```console
