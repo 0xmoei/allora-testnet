@@ -116,17 +116,21 @@ mkdir head-data
 
 # Give certain permissions
 sudo chmod -R 777 worker-data
-sudo chmod -R 777 whead-data
+sudo chmod -R 777 head-data
 
 # Create head keys
 sudo docker run -it --entrypoint=bash -v ./head-data:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
 
 # Create worker keys
 sudo docker run -it --entrypoint=bash -v ./worker-data:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
-
+```
+```console
 # Copy the key
 cat head-data/keys/identity
+```
+![Screenshot_78](https://github.com/0xmoei/allora-testnet/assets/90371338/5c8e4f77-6214-4f65-83e2-359a39aee966)
 
+```console
 # Replace head-id with your key
 nano docker-compose.yml
 
