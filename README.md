@@ -109,7 +109,7 @@ docker compose up -d
 
 
 ## Check your node status
-* Worker node
+### Worker node
 ```console
 curl --location 'http://localhost:6000/api/v1/functions/execute' \
 --header 'Content-Type: application/json' \
@@ -160,7 +160,7 @@ Response:
 }
 ```
 
-* Updater node
+### Updater node
 ```console
 curl http://localhost:8000/update
 ```
@@ -169,7 +169,7 @@ Response:
 0
 ```
 
-Inference node
+### Inference node
 ```console
 curl http://localhost:8000/inference/ETH
 ```
