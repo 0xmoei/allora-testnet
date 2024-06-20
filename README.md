@@ -28,6 +28,7 @@
 
 ## Install dependecies
 ```console
+# Install Packages
 sudo apt update & sudo apt upgrade -y
 
 sudo apt install ca-certificates curl git wget make jq build-essential pkg-config lsb-release libssl-dev gcc screen unzip lz4 -y
