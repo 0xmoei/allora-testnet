@@ -30,7 +30,28 @@
 ```console
 sudo apt update & sudo apt upgrade -y
 
-sudo apt install curl git wget make jq build-essential pkg-config libssl-dev gcc screen unzip lz4 -y
+sudo apt install ca-certificates curl git wget make jq build-essential pkg-config lsb-release libssl-dev gcc screen unzip lz4 -y
+
+# Install Docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+docker version
+
+# Install Docker-Compose
+VER=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep tag_name | cut -d '"' -f 4)
+
+curl -L "https://github.com/docker/compose/releases/download/"$VER"/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+# Docker Permission to user
+sudo groupadd docker
+sudo usermod -aG docker $USER
 ```
 
 ## Install Go
@@ -92,10 +113,10 @@ sudo chmod -R 777 worker-data
 sudo chmod -R 777 whead-data
 
 # Create head keys
-docker run -it --entrypoint=bash -v ./head-data:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
+sudo docker run -it --entrypoint=bash -v ./head-data:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
 
 # Create worker keys
-docker run -it --entrypoint=bash -v ./worker-data:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
+sudo docker run -it --entrypoint=bash -v ./worker-data:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
 
 # Copy the key
 cat head-data/keys/identity
@@ -107,6 +128,8 @@ nano docker-compose.yml
 docker compose build
 docker compose up -d
 ```
+
+## Connect to Allora Chain
 
 
 ## Check your node status
