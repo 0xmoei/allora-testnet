@@ -86,6 +86,8 @@ allorad version
 # Recover your wallet with seed-phrase
 allorad keys add testkey --recover
 
+#OR
+
 # Create a new wallet
 allorad keys add testkey
 ```
