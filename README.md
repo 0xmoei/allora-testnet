@@ -275,6 +275,7 @@ volumes:
   worker-data:
   head-data:
 ```
+To save: CTRL+X+Y Enter
 
 ## Run worker
 ```console
