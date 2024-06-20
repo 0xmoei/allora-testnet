@@ -1,20 +1,20 @@
 # Allora Network
 
-> Create a new wallet in Keplr
+> - Create a new wallet in Keplr
 >
-> Connect to the on-chain Point Program [Dashboard](https://app.allora.network?ref=eyJyZWZlcnJlcl9pZCI6IjVlNmEwMjc5LTcxNjEtNDhmYS04NGM3LWEzYzM0MGM4MGIzNyJ9)
+> - Connect to the on-chain Point Program [Dashboard](https://app.allora.network?ref=eyJyZWZlcnJlcl9pZCI6IjVlNmEwMjc5LTcxNjEtNDhmYS04NGM3LWEzYzM0MGM4MGIzNyJ9)
 >
-> In Campaigns tab you see 2 tasks, Check them
+> - In Campaigns tab you see 2 tasks, Check them
 > 
-> In the tutorial we run a `Price Prediction Worker` with `topic 1` (Predicting `ETH` price every 24h)
+> - In the tutorial we run a `Price Prediction Worker` with `topic 1` (Predicting `ETH` price every 24h)
 >
-> Check the campaigns tasks steps to see what `topic` means
+> - Check the campaigns tasks steps to see what `topic` means
 >
-> We get points by running a worker
+> - We get points by running a worker
 >
-> The points are 0 for everyone right now and we are not sure that we are 100% fine
+> - The points are 0 for everyone right now and we are not sure that we are 100% fine
 >
-> I will update reguarly here, so we make sure that we will gain points when it is fixed
+> - I will update reguarly here, so we make sure that we will gain points when it is fixed
 
 ## Install dependecies
 ```console
