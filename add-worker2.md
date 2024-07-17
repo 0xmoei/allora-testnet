@@ -208,7 +208,7 @@ docker compose logs -f worker-2
 # Check worker 1 logs
 docker compose logs -f worker-1
 ```
-> You must have `Success: register node Tx Hash` in workers 2 logs (new worker)
+> You must have `Success: register node Tx Hash` in worker 1 & 2 logs
 > Success: register node Tx Hash:=82BF67E2E1247B226B8C5CFCF3E4F41076909ADABF3852C468D087D94BD9FC3B
 
 ![Screenshot_80](https://github.com/0xmoei/allora-testnet/assets/90371338/cefe126e-4ecb-4af3-9444-4e5e014fed52)
