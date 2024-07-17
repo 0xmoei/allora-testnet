@@ -324,20 +324,23 @@ docker compose --build up -d
 ## Check your node status
 ### Check running docker containers
 ```console
-docker ps
-```
-![Screenshot_81](https://github.com/0xmoei/allora-testnet/assets/90371338/9565560a-6884-42f6-899b-7920eca43ef0)
+# Ensure you are in the right directory
+cd $HOME && cd basic-coin-prediction-node
 
-Replace `CONTAINER_ID` with the id of your docker containers
-```console
-docker logs -f CONTAINER_ID
+# Check worker 1 logs
+docker compose logs -f worker-1
+
+# Check worker 2 logs
+docker compose logs -f worker-2
 ```
+> You must have `Success: register node Tx Hash` in workers 1 & 2 logs
 > Success: register node Tx Hash:=82BF67E2E1247B226B8C5CFCF3E4F41076909ADABF3852C468D087D94BD9FC3B
 
 ![Screenshot_80](https://github.com/0xmoei/allora-testnet/assets/90371338/cefe126e-4ecb-4af3-9444-4e5e014fed52)
 
 
 ### Check Worker node:
+Check topic 1:
 ```console
 network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
@@ -361,7 +364,36 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
             }
         ],
         "number_of_nodes": -1,
-        "timeout": 10
+        "timeout": 2
+    }
+}' | jq
+```
+
+Check topic 2:
+```console
+network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
+curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
+    "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
+    "method": "allora-inference-function.wasm",
+    "parameters": null,
+    "topic": "allora-topic-2-worker",
+    "config": {
+        "env_vars": [
+            {
+                "name": "BLS_REQUEST_PATH",
+                "value": "/api"
+            },
+            {
+                "name": "ALLORA_ARG_PARAMS",
+                "value": "ETH"
+            },
+            {
+                "name": "ALLORA_BLOCK_HEIGHT_CURRENT",
+                "value": "'"${network_height}"'"
+            }
+        ],
+        "number_of_nodes": -1,
+        "timeout": 2
     }
 }' | jq
 ```
