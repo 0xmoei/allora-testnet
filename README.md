@@ -320,7 +320,7 @@ To save: CTRL+X+Y Enter
 
 ## Run worker
 ```console
-docker compose --build up -d
+docker compose up -d --build
 ```
 
 ## Check your node status
