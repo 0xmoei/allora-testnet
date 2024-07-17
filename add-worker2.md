@@ -1,3 +1,5 @@
+> Make sure you have uALLO faucet in your wallet in order to register 2nd worker
+
 ```console
 cd $HOME && cd basic-coin-prediction-node
 
