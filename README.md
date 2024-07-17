@@ -8,7 +8,7 @@
 >
 > - In Campaigns tab you see 2 tasks, Check them
 > 
-> - In the tutorial we run a `Price Prediction Worker` with `topic 1` (Predicting `ETH` price every 24h)
+> - In the tutorial we run 2 `Price Prediction Workers` with `topic 5` & `topic 6` (Predicting `SOL` price every 24hr & 1hr)
 >
 > - Check the campaigns tasks steps to see what `topic` means
 >
@@ -341,14 +341,14 @@ docker compose logs -f worker-2
 
 
 ### Check Worker node:
-Check topic 1:
+Check topic 5 (worker 1):
 ```console
 network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
     "parameters": null,
-    "topic": "allora-topic-1-worker",
+    "topic": "allora-topic-5-worker",
     "config": {
         "env_vars": [
             {
@@ -357,7 +357,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
             },
             {
                 "name": "ALLORA_ARG_PARAMS",
-                "value": "ETH"
+                "value": "SOL"
             },
             {
                 "name": "ALLORA_BLOCK_HEIGHT_CURRENT",
@@ -370,14 +370,14 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
 }' | jq
 ```
 
-Check topic 2:
+Check topic 6 (worker 2):
 ```console
 network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
     "parameters": null,
-    "topic": "allora-topic-2-worker",
+    "topic": "allora-topic-6-worker",
     "config": {
         "env_vars": [
             {
@@ -386,7 +386,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
             },
             {
                 "name": "ALLORA_ARG_PARAMS",
-                "value": "ETH"
+                "value": "SOL"
             },
             {
                 "name": "ALLORA_BLOCK_HEIGHT_CURRENT",
