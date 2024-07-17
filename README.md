@@ -118,18 +118,19 @@ cd $HOME && git clone https://github.com/allora-network/basic-coin-prediction-no
 
 cd basic-coin-prediction-node
 
-mkdir worker-data
-mkdir head-data
+mkdir workers
+mkdir workers/worker-1 workers/worker-2
 
 # Give certain permissions
-sudo chmod -R 777 worker-data
-sudo chmod -R 777 head-data
+sudo chmod -R 777 workers/worker-1
+sudo chmod -R 777 workers/worker-2
 
 # Create head keys
 sudo docker run -it --entrypoint=bash -v ./head-data:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
 
 # Create worker keys
-sudo docker run -it --entrypoint=bash -v ./worker-data:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
+sudo docker run -it --entrypoint=bash -v ./workers/worker-1:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
+sudo docker run -it --entrypoint=bash -v ./workers/worker-2:/data alloranetwork/allora-inference-base:latest -c "mkdir -p /data/keys && (cd /data/keys && allora-keys)"
 ```
 ```console
 # Copy the head-id
@@ -146,13 +147,13 @@ rm -rf docker-compose.yml && nano docker-compose.yml
 ```
 
 * Copy & Paste the following code in it
-* Replace `head-id` & `WALLET_SEED_PHRASE`
+* Replace `head-id` & `WALLET_SEED_PHRASE` in worker-1 and worker-2 containers
 ```
 version: '3'
 
 services:
   inference:
-    container_name: inference-basic-eth-pred
+    container_name: inference
     build:
       context: .
     command: python -u /app/app.py
@@ -193,7 +194,7 @@ services:
         ipv4_address: 172.22.0.5
   
   head:
-    container_name: head-basic-eth-pred
+    container_name: head
     image: alloranetwork/allora-inference-base-head:latest
     environment:
       - HOME=/data
@@ -222,8 +223,8 @@ services:
           - head
         ipv4_address: 172.22.0.100
 
-  worker:
-    container_name: worker-basic-eth-pred
+  worker-1:
+    container_name: worker-1
     environment:
       - INFERENCE_API_ADDRESS=http://inference:8000
       - HOME=/data
@@ -250,7 +251,7 @@ services:
           --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
           --allora-chain-topic-id=1
     volumes:
-      - ./worker-data:/data
+      - ./workers/worker-1:/data
     working_dir: /data
     depends_on:
       - inference
@@ -258,10 +259,48 @@ services:
     networks:
       eth-model-local:
         aliases:
-          - worker
+          - worker1
         ipv4_address: 172.22.0.10
 
-
+  worker-2:
+    container_name: worker-2
+    environment:
+      - INFERENCE_API_ADDRESS=http://inference:8000
+      - HOME=/data
+    build:
+      context: .
+      dockerfile: Dockerfile_b7s
+    entrypoint:
+      - "/bin/bash"
+      - "-c"
+      - |
+        if [ ! -f /data/keys/priv.bin ]; then
+          echo "Generating new private keys..."
+          mkdir -p /data/keys
+          cd /data/keys
+          allora-keys
+        fi
+        # Change boot-nodes below to the key advertised by your head
+        allora-node --role=worker --peer-db=/data/peerdb --function-db=/data/function-db \
+          --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
+          --private-key=/data/keys/priv.bin --log-level=debug --port=9013 \
+          --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
+          --topic=allora-topic-2-worker --allora-chain-worker-mode=worker \
+          --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
+          --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
+          --allora-chain-key-name=worker-2 \
+          --allora-chain-topic-id=2
+    volumes:
+      - ./workers/worker-2:/data
+    working_dir: /data
+    depends_on:
+      - inference
+      - head
+    networks:
+      eth-model-local:
+        aliases:
+          - worker1
+        ipv4_address: 172.22.0.11
   
 networks:
   eth-model-local:
@@ -272,15 +311,14 @@ networks:
 
 volumes:
   inference-data:
-  worker-data:
+  workers:
   head-data:
 ```
 To save: CTRL+X+Y Enter
 
 ## Run worker
 ```console
-docker compose build
-docker compose up -d
+docker compose --build up -d
 ```
 
 ## Check your node status
