@@ -170,7 +170,7 @@ services:
       retries: 12
     volumes:
       - ./inference-data:/app/data
-
+  
   updater:
     container_name: updater-basic-eth-pred
     build: .
@@ -191,6 +191,36 @@ services:
         aliases:
           - updater
         ipv4_address: 172.22.0.5
+  
+  head:
+    container_name: head-basic-eth-pred
+    image: alloranetwork/allora-inference-base-head:latest
+    environment:
+      - HOME=/data
+    entrypoint:
+      - "/bin/bash"
+      - "-c"
+      - |
+        if [ ! -f /data/keys/priv.bin ]; then
+          echo "Generating new private keys..."
+          mkdir -p /data/keys
+          cd /data/keys
+          allora-keys
+        fi
+        allora-node --role=head --peer-db=/data/peerdb --function-db=/data/function-db  \
+          --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
+          --private-key=/data/keys/priv.bin --log-level=debug --port=9010 --rest-api=:6000 \
+          --boot-nodes=/dns4/head-0-p2p.v2.testnet.allora.network/tcp/32130/p2p/12D3KooWGKY4z2iNkDMERh5ZD8NBoAX6oWzkDnQboBRGFTpoKNDF
+    ports:
+      - "6000:6000"
+    volumes:
+      - ./head-data:/data
+    working_dir: /data
+    networks:
+      eth-model-local:
+        aliases:
+          - head
+        ipv4_address: 172.22.0.100
 
   worker:
     container_name: worker-basic-eth-pred
@@ -215,8 +245,7 @@ services:
           --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
           --private-key=/data/keys/priv.bin --log-level=debug --port=9011 \
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
-          --topic=1 \
-          --allora-chain-key-name=testkey \
+          --topic=allora-topic-1-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
           --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
           --allora-chain-topic-id=1
@@ -232,36 +261,8 @@ services:
           - worker
         ipv4_address: 172.22.0.10
 
-  head:
-    container_name: head-basic-eth-pred
-    image: alloranetwork/allora-inference-base-head:latest
-    environment:
-      - HOME=/data
-    entrypoint:
-      - "/bin/bash"
-      - "-c"
-      - |
-        if [ ! -f /data/keys/priv.bin ]; then
-          echo "Generating new private keys..."
-          mkdir -p /data/keys
-          cd /data/keys
-          allora-keys
-        fi
-        allora-node --role=head --peer-db=/data/peerdb --function-db=/data/function-db  \
-          --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
-          --private-key=/data/keys/priv.bin --log-level=debug --port=9010 --rest-api=:6000
-    ports:
-      - "6000:6000"
-    volumes:
-      - ./head-data:/data
-    working_dir: /data
-    networks:
-      eth-model-local:
-        aliases:
-          - head
-        ipv4_address: 172.22.0.100
 
-
+  
 networks:
   eth-model-local:
     driver: bridge
@@ -300,13 +301,12 @@ docker logs -f CONTAINER_ID
 
 ### Check Worker node:
 ```console
-curl --location 'http://localhost:6000/api/v1/functions/execute' \
---header 'Content-Type: application/json' \
---data '{
+network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
+curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
     "parameters": null,
-    "topic": "1",
+    "topic": "allora-topic-1-worker",
     "config": {
         "env_vars": [
             {
@@ -316,34 +316,38 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' \
             {
                 "name": "ALLORA_ARG_PARAMS",
                 "value": "ETH"
+            },
+            {
+                "name": "ALLORA_BLOCK_HEIGHT_CURRENT",
+                "value": "'"${network_height}"'"
             }
         ],
         "number_of_nodes": -1,
-        "timeout": 2
+        "timeout": 10
     }
-}'
+}' | jq
 ```
 Response:
 ```
 {
   "code": "200",
-  "request_id": "03001a39-4387-467c-aba1-c0e1d0d44f59",
+  "request_id": "d9450b57-65d3-45f0-b3a2-201b8f2e4cbc",
   "results": [
     {
       "result": {
-        "stdout": "{\"value\":\"2564.021586281073\"}",
+        "stdout": "{\"infererValue\": \"2962.3654930667144\"}\n\n",
         "stderr": "",
         "exit_code": 0
       },
       "peers": [
-        "12D3KooWG8dHctRt6ctakJfG5masTnLaKM6xkudoR5BxLDRSrgVt"
+        "12D3KooWFzs8C6Da4MrxU8JqCF4LQW3n6pZYnnWZF5TCqFgxM2Ph"
       ],
       "frequency": 100
     }
   ],
   "cluster": {
     "peers": [
-      "12D3KooWG8dHctRt6ctakJfG5masTnLaKM6xkudoR5BxLDRSrgVt"
+      "12D3KooWFzs8C6Da4MrxU8JqCF4LQW3n6pZYnnWZF5TCqFgxM2Ph"
     ]
   }
 }
