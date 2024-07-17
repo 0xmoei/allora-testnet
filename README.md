@@ -301,7 +301,7 @@ services:
     networks:
       eth-model-local:
         aliases:
-          - worker2
+          - worker1
         ipv4_address: 172.22.0.13
   
 networks:
