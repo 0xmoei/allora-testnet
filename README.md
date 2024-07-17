@@ -246,11 +246,11 @@ services:
           --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
           --private-key=/data/keys/priv.bin --log-level=debug --port=9011 \
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
-          --topic=allora-topic-5-worker --allora-chain-worker-mode=worker \
+          --topic=allora-topic-1-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
           --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
           --allora-chain-key-name=worker-1 \
-          --allora-chain-topic-id=5
+          --allora-chain-topic-id=1
     volumes:
       - ./workers/worker-1:/data
     working_dir: /data
@@ -286,11 +286,11 @@ services:
           --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
           --private-key=/data/keys/priv.bin --log-level=debug --port=9013 \
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
-          --topic=allora-topic-6-worker --allora-chain-worker-mode=worker \
+          --topic=allora-topic-2-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
           --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
           --allora-chain-key-name=worker-2 \
-          --allora-chain-topic-id=6
+          --allora-chain-topic-id=2
     volumes:
       - ./workers/worker-2:/data
     working_dir: /data
@@ -341,14 +341,14 @@ docker compose logs -f worker-2
 
 
 ### Check Worker node:
-Check topic 5 (worker 1):
+Check topic 1:
 ```console
 network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
     "parameters": null,
-    "topic": "allora-topic-5-worker",
+    "topic": "allora-topic-1-worker",
     "config": {
         "env_vars": [
             {
@@ -357,7 +357,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
             },
             {
                 "name": "ALLORA_ARG_PARAMS",
-                "value": "SOL"
+                "value": "ETH"
             },
             {
                 "name": "ALLORA_BLOCK_HEIGHT_CURRENT",
@@ -370,14 +370,14 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
 }' | jq
 ```
 
-Check topic 6 (worker 2):
+Check topic 2:
 ```console
 network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
     "parameters": null,
-    "topic": "allora-topic-6-worker",
+    "topic": "allora-topic-2-worker",
     "config": {
         "env_vars": [
             {
@@ -386,7 +386,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
             },
             {
                 "name": "ALLORA_ARG_PARAMS",
-                "value": "SOL"
+                "value": "ETH"
             },
             {
                 "name": "ALLORA_BLOCK_HEIGHT_CURRENT",
