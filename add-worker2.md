@@ -214,14 +214,14 @@ docker compose logs -f worker-1
 ![Screenshot_80](https://github.com/0xmoei/allora-testnet/assets/90371338/cefe126e-4ecb-4af3-9444-4e5e014fed52)
 
 ### Check Worker node:
-Check topic 1:
+Check topic 5 (worker 1):
 ```console
 network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
     "parameters": null,
-    "topic": "allora-topic-1-worker",
+    "topic": "allora-topic-5-worker",
     "config": {
         "env_vars": [
             {
@@ -230,7 +230,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
             },
             {
                 "name": "ALLORA_ARG_PARAMS",
-                "value": "ETH"
+                "value": "SOL"
             },
             {
                 "name": "ALLORA_BLOCK_HEIGHT_CURRENT",
@@ -243,14 +243,14 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
 }' | jq
 ```
 
-Check topic 2:
+Check topic 6 (worker 2):
 ```console
 network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
     "parameters": null,
-    "topic": "allora-topic-2-worker",
+    "topic": "allora-topic-6-worker",
     "config": {
         "env_vars": [
             {
@@ -259,7 +259,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
             },
             {
                 "name": "ALLORA_ARG_PARAMS",
-                "value": "ETH"
+                "value": "SOL"
             },
             {
                 "name": "ALLORA_BLOCK_HEIGHT_CURRENT",
