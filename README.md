@@ -461,5 +461,5 @@ docker container stop worker-1
 docker container rm worker-1
 
 # Restart worker container (worker-1 or worker-2)
-docker compose up -d worker-1
+docker compose up -d --build
 ```
