@@ -448,3 +448,17 @@ docker ps
 
 
 Congratz. Worker is working safely but currently I am not sure that I have done it completely correct as the point system seems to be buggy. I'll update here and on my twitter [0xMoei](https://twitter.com/0xMoei)
+
+
+### 🚨Error 408: when checking topic status
+```console
+# Ensure you are in the right directory
+cd $HOME && cd basic-coin-prediction-node
+
+# Remove worker container (worker-1 or worker-2)
+docker container stop worker-1
+docker container rm worker-1
+
+# Restart worker container (worker-1 or worker-2)
+docker container restart worker-1
+```
