@@ -44,13 +44,13 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/inference/ETH"]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 12
     volumes:
       - ./inference-data:/app/data
   
   updater:
-    container_name: updater-basic-eth-pred
+    container_name: updater
     build: .
     environment:
       - INFERENCE_API_ADDRESS=http://inference:8000
@@ -123,10 +123,11 @@ services:
           --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
           --private-key=/data/keys/priv.bin --log-level=debug --port=9011 \
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
-          --topic=allora-topic-1-worker --allora-chain-worker-mode=worker \
+          --topic=allora-topic-5-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
           --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
-          --allora-chain-topic-id=1
+          --allora-chain-key-name=worker-1 \
+          --allora-chain-topic-id=5
     volumes:
       - ./workers/worker-1:/data
     working_dir: /data
@@ -137,7 +138,7 @@ services:
       eth-model-local:
         aliases:
           - worker1
-        ipv4_address: 172.22.0.10
+        ipv4_address: 172.22.0.12
 
   worker-2:
     container_name: worker-2
@@ -162,11 +163,11 @@ services:
           --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
           --private-key=/data/keys/priv.bin --log-level=debug --port=9013 \
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
-          --topic=allora-topic-2-worker --allora-chain-worker-mode=worker \
+          --topic=allora-topic-6-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
           --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
           --allora-chain-key-name=worker-2 \
-          --allora-chain-topic-id=2
+          --allora-chain-topic-id=6
     volumes:
       - ./workers/worker-2:/data
     working_dir: /data
@@ -177,7 +178,7 @@ services:
       eth-model-local:
         aliases:
           - worker1
-        ipv4_address: 172.22.0.11
+        ipv4_address: 172.22.0.13
   
 networks:
   eth-model-local:
