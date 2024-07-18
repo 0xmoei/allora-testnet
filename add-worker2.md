@@ -193,7 +193,7 @@ volumes:
   head-data:
 ```
 ```console
-docker compose --build up -d
+docker compose up -d --build
 ```
 
 ## Check your node status
