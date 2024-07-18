@@ -249,7 +249,7 @@ services:
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
           --topic=allora-topic-1-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
-          --allora-node-rpc-address=ttps://allora-rpc.testnet-1.testnet.allora.network \
+          --allora-node-rpc-address=https://allora-rpc.testnet-1.testnet.allora.network \
           --allora-chain-key-name=worker-1 \
           --allora-chain-topic-id=1
     volumes:
@@ -289,7 +289,7 @@ services:
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
           --topic=allora-topic-2-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
-          --allora-node-rpc-address=ttps://allora-rpc.testnet-1.testnet.allora.network \
+          --allora-node-rpc-address=https://allora-rpc.testnet-1.testnet.allora.network \
           --allora-chain-key-name=worker-2 \
           --allora-chain-topic-id=2
     volumes:
@@ -344,7 +344,7 @@ docker compose logs -f worker-2
 ### Check Worker node:
 Check topic 1:
 ```console
-network_height=$(curl -s -X 'GET' 'ttps://allora-rpc.testnet-1.testnet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
+network_height=$(curl -s -X 'GET' 'https://allora-rpc.testnet-1.testnet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
@@ -373,7 +373,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
 
 Check topic 2:
 ```console
-network_height=$(curl -s -X 'GET' 'ttps://allora-rpc.testnet-1.testnet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
+network_height=$(curl -s -X 'GET' 'https://allora-rpc.testnet-1.testnet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
