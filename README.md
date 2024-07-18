@@ -212,7 +212,7 @@ services:
         allora-node --role=head --peer-db=/data/peerdb --function-db=/data/function-db  \
           --runtime-path=/app/runtime --runtime-cli=bls-runtime --workspace=/data/workspace \
           --private-key=/data/keys/priv.bin --log-level=debug --port=9010 --rest-api=:6000 \
-          --boot-nodes=/dns4/head-0-p2p.v2.testnet.allora.network/tcp/32130/p2p/12D3KooWGKY4z2iNkDMERh5ZD8NBoAX6oWzkDnQboBRGFTpoKNDF
+          --boot-nodes=/dns/head-0-p2p.testnet-1.testnet.allora.network/tcp/32130/p2p/12D3KooWLBhsSucVVcyVCaM9pvK8E7tWBM9L19s7XQHqqejyqgEC,/dns/head-1-p2p.testnet-1.testnet.allora.network/tcp/32131/p2p/12D3KooWEUNWg7YHeeCtH88ju63RBfY5hbdv9hpv84ffEZpbJszt,/dns/head-2-p2p.testnet-1.testnet.allora.network/tcp/32132/p2p/12D3KooWATfUSo95wtZseHbogpckuFeSvpL4yks6XtvrjVHcCCXk
     ports:
       - "6000:6000"
     volumes:
@@ -249,7 +249,7 @@ services:
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
           --topic=allora-topic-1-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
-          --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
+          --allora-node-rpc-address=ttps://allora-rpc.testnet-1.testnet.allora.network \
           --allora-chain-key-name=worker-1 \
           --allora-chain-topic-id=1
     volumes:
@@ -289,7 +289,7 @@ services:
           --boot-nodes=/ip4/172.22.0.100/tcp/9010/p2p/head-id \
           --topic=allora-topic-2-worker --allora-chain-worker-mode=worker \
           --allora-chain-restore-mnemonic='WALLET_SEED_PHRASE' \
-          --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/ \
+          --allora-node-rpc-address=ttps://allora-rpc.testnet-1.testnet.allora.network \
           --allora-chain-key-name=worker-2 \
           --allora-chain-topic-id=2
     volumes:
@@ -344,7 +344,7 @@ docker compose logs -f worker-2
 ### Check Worker node:
 Check topic 1:
 ```console
-network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
+network_height=$(curl -s -X 'GET' 'ttps://allora-rpc.testnet-1.testnet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
@@ -373,7 +373,7 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
 
 Check topic 2:
 ```console
-network_height=$(curl -s -X 'GET' 'https://allora-rpc.edgenet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
+network_height=$(curl -s -X 'GET' 'ttps://allora-rpc.testnet-1.testnet.allora.network/abci_info?' -H 'accept: application/json' | jq -r .result.response.last_block_height) && \
 curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Content-Type: application/json' --data '{
     "function_id": "bafybeigpiwl3o73zvvl6dxdqu7zqcub5mhg65jiky2xqb4rdhfmikswzqm",
     "method": "allora-inference-function.wasm",
@@ -399,27 +399,153 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' --header 'Conte
     }
 }' | jq
 ```
-Response:
+Response: you will get code: `200` if everything is fine
 ```
 {
   "code": "200",
-  "request_id": "d9450b57-65d3-45f0-b3a2-201b8f2e4cbc",
+  "request_id": "9660af22-54d0-4219-a1de-3677868b715f",
   "results": [
     {
       "result": {
-        "stdout": "{\"infererValue\": \"2962.3654930667144\"}\n\n",
+        "stdout": "Error running script: exit status 1\n\n",
         "stderr": "",
         "exit_code": 0
       },
       "peers": [
-        "12D3KooWFzs8C6Da4MrxU8JqCF4LQW3n6pZYnnWZF5TCqFgxM2Ph"
+        "12D3KooWFqPD3xcY37R5kgUePW4ZNgM2ePDv9r96qF68kwFQZ3pU",
+        "12D3KooWJiRzp3DFSy6yqspp4KdJSyDkjBdBfq2a1uf2BRBCdAGk",
+        "12D3KooWGdo7GZgkcY7stYQbRYoSMuiSeBoUBiLd8JzUcgfDQCMN"
       ],
-      "frequency": 100
+      "frequency": 21.428571428571427
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3392.0363009974553\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWHRyWdYQhpgrQ2q6CArP8N6UsDXt5mDfML4fybqCFVGEC",
+        "12D3KooWPTsR5JMmjtekPzUr9gRdXNit4CMXqDxDHHc2beXcuHyr"
+      ],
+      "frequency": 14.285714285714286
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3473.133811362153\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWKTidHUzFchp1C38WvVEhBAudBCTxiArbxphgyQi2Qvih"
+      ],
+      "frequency": 7.142857142857143
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3426.4731836502633\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWGMAHnaGgoaUz9KiKut9xLEPk66aCW15PLrpotBWS84JM"
+      ],
+      "frequency": 7.142857142857143
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3464.5369537965817\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWJcFcL9arJWbwJKyZpZn81J6Tj5fpFW4BG4AvLeGTTSpi"
+      ],
+      "frequency": 7.142857142857143
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3366.2086390078493\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWFYAveN1qCyyrrkdUDuueAeA5Dyk7GEZyhYnmxhe5arfT"
+      ],
+      "frequency": 7.142857142857143
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3374.8178596710513\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWQMjk6RBAUdsexGoSrGiBRYhEjk6b6QAqiy28uWssJerN"
+      ],
+      "frequency": 7.142857142857143
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3455.94009623101\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWQ85FMueZ6rv6XYHK6FbDqKs7wzZP1kkdqvNVSqo3gA1Z"
+      ],
+      "frequency": 7.142857142857143
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3383.4270803342533\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWFMUvLousm8qm7RDgxMuA9QhgirsvC24vGNU4wFzgCrTD"
+      ],
+      "frequency": 7.142857142857143
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"2925.5640664690764\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWKMWhzRkyBZ4YAUSRGgauHd8yi5DQcfHz3h5zZ9Yktdtz"
+      ],
+      "frequency": 7.142857142857143
+    },
+    {
+      "result": {
+        "stdout": "{\"infererValue\": \"3021.1331\"}\n\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "peers": [
+        "12D3KooWMUaYAnYaFWBjHVTxwgYBdnG5P2doKetE4NzypUjG9Ddm"
+      ],
+      "frequency": 7.142857142857143
     }
   ],
   "cluster": {
     "peers": [
-      "12D3KooWFzs8C6Da4MrxU8JqCF4LQW3n6pZYnnWZF5TCqFgxM2Ph"
+      "12D3KooWFqPD3xcY37R5kgUePW4ZNgM2ePDv9r96qF68kwFQZ3pU",
+      "12D3KooWPTsR5JMmjtekPzUr9gRdXNit4CMXqDxDHHc2beXcuHyr",
+      "12D3KooWKMWhzRkyBZ4YAUSRGgauHd8yi5DQcfHz3h5zZ9Yktdtz",
+      "12D3KooWJcFcL9arJWbwJKyZpZn81J6Tj5fpFW4BG4AvLeGTTSpi",
+      "12D3KooWGdo7GZgkcY7stYQbRYoSMuiSeBoUBiLd8JzUcgfDQCMN",
+      "12D3KooWQ85FMueZ6rv6XYHK6FbDqKs7wzZP1kkdqvNVSqo3gA1Z",
+      "12D3KooWFMUvLousm8qm7RDgxMuA9QhgirsvC24vGNU4wFzgCrTD",
+      "12D3KooWQMjk6RBAUdsexGoSrGiBRYhEjk6b6QAqiy28uWssJerN",
+      "12D3KooWHRyWdYQhpgrQ2q6CArP8N6UsDXt5mDfML4fybqCFVGEC",
+      "12D3KooWJiRzp3DFSy6yqspp4KdJSyDkjBdBfq2a1uf2BRBCdAGk",
+      "12D3KooWFYAveN1qCyyrrkdUDuueAeA5Dyk7GEZyhYnmxhe5arfT",
+      "12D3KooWKTidHUzFchp1C38WvVEhBAudBCTxiArbxphgyQi2Qvih",
+      "12D3KooWGMAHnaGgoaUz9KiKut9xLEPk66aCW15PLrpotBWS84JM",
+      "12D3KooWMUaYAnYaFWBjHVTxwgYBdnG5P2doKetE4NzypUjG9Ddm"
     ]
   }
 }
