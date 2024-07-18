@@ -1,3 +1,5 @@
+### Replace 2 head-id & 2 WALLET_SEED_PHRASE for both worker-1 & worker-2
+```console
 version: '3'
 
 services:
@@ -163,3 +165,4 @@ volumes:
   inference-data:
   workers:
   head-data:
+  ```
