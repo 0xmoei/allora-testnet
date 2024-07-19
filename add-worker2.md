@@ -1,4 +1,5 @@
 ### Make sure you have uALLO faucet in your wallet in order to register 2nd worker
+https://faucet.testnet-1.testnet.allora.network/
 
 #
 
