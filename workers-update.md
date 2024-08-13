@@ -103,7 +103,7 @@ chmod +x init.config
 
 
 ```console
-docker compose up --build
+docker compose up -d --build
 ```
 ![image](https://github.com/user-attachments/assets/63ca0e84-c802-416a-a872-af6331aa776f)
 
