@@ -96,10 +96,6 @@ Ctrl+X+Y+Enter to save & exit
 
 ### Run Worker
 ```console
-mkdir worker-data
-```
-
-```console
 chmod +x init.config
 ./init.config
 ```
