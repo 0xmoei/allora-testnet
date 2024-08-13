@@ -105,6 +105,31 @@ chmod +x init.config
 ```console
 docker compose up -d --build
 ```
+
+### Check logs
+Containers:
+```console
+docker compose ps
+```
+
+worker:
+```console
+docker compose logs -f worker
+```
 ![image](https://github.com/user-attachments/assets/63ca0e84-c802-416a-a872-af6331aa776f)
 
+inference:
+```console
+docker compose logs -f inference
+```
+![image](https://github.com/user-attachments/assets/a8133f85-b643-484d-beeb-cdfb51d6fd5c)
+
+updater:
+```console
+docker compose logs -f updater
+
+# Response:
+# updater-basic-eth-pred  | UPDATING INFERENCE WORKER DATA
+# updater-basic-eth-pred  | Response content is '0'
+```
 
