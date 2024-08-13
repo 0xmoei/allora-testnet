@@ -101,7 +101,7 @@ Ctrl+X+Y+Enter to save & exit
 sudo rm -rf app.py && sudo nano app.py
 ```
 * Paste below code
-* Replace API your COINGECKO API with
+* Replace your COINGECKO API with `CG-XXXXXXXXXXXXXXXXXXX`
 ```console
 from flask import Flask, Response
 import requests
