@@ -8,7 +8,7 @@
 ​
 Workers that spin up a node using the new process should see points within an hour of running the node.
 
-### If you are new, make shure you installed dependecies [here](https://github.com/0xmoei/allora-testnet/blob/main/README.md#install-dependecies)
+### If you are new, make sure you installed dependecies [here](https://github.com/0xmoei/allora-testnet/blob/main/README.md#install-dependecies)
 
 ### 1- Remove Old files
 ```console
