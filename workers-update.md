@@ -170,6 +170,7 @@ def get_inference(token):
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000, debug=True)
 ```
+Ctrl+X+Y+Enter to save & exit
 
 ### 4- Config main.py
 ```
@@ -205,6 +206,7 @@ if __name__ == "__main__":
         value = json.dumps({"error": {str(e)}})
     print(value)
 ```
+Ctrl+X+Y+Enter to save & exit
 
 ### 5- Config Requirement.txt
 ```console
@@ -218,6 +220,7 @@ transformers[torch]
 pandas
 git+https://github.com/amazon-science/chronos-forecasting.git
 ```
+Ctrl+X+Y+Enter to save & exit
 
 ### 6- Run Worker
 ```console
