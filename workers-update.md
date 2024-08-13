@@ -30,14 +30,14 @@ allorad keys list
 #
 
 # 3 Topic Workers using Basic-Price-Prediction model
-### Clone worker
+### 1- Clone worker
 ```console
 cd $HOME
 git clone https://github.com/allora-network/basic-coin-prediction-node
 cd basic-coin-prediction-node
 ```
 
-### Config Worker
+### 2- Config Worker
 ```console
 # Remove config file
 rm -rf config.json
@@ -94,7 +94,7 @@ nano config.json
 ```
 Ctrl+X+Y+Enter to save & exit
 
-### Config App.py
+### 3- Config App.py
 * Register Coingecko https://www.coingecko.com/en/developers/dashboard & Create API KEY
 ```console
 sudo rm -rf app.py && sudo nano app.py
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000, debug=True)
 ```
 
-### Config main.py
+### 4- Config main.py
 ```
 sudo rm -rf main.py && sudo nano main.py
 ```
@@ -205,7 +205,7 @@ if __name__ == "__main__":
     print(value)
 ```
 
-### Config Requirement.txt
+### 5- Config Requirement.txt
 ```console
 sudo rm -rf requirements.txt && sudo nano requirements.txt
 ```
@@ -218,7 +218,7 @@ pandas
 git+https://github.com/amazon-science/chronos-forecasting.git
 ```
 
-### Run Worker
+### 6- Run Worker
 ```console
 chmod +x init.config
 ./init.config
@@ -230,7 +230,7 @@ chmod +x init.config
 docker compose up -d --build
 ```
 
-### Check logs
+### 7- Check logs
 Containers:
 ```console
 docker compose ps
