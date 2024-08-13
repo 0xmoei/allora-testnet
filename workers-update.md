@@ -33,8 +33,8 @@ allorad keys list
 ### Clone worker
 ```console
 cd $HOME
-git clone https://github.com/allora-network/allora-offchain-node
-cd allora-offchain-node
+git clone https://github.com/allora-network/basic-coin-prediction-node
+cd basic-coin-prediction-node
 ```
 
 ### Config Worker
